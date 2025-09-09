@@ -9,7 +9,7 @@
     :root{
       --ink:#e8ecf3;         /* 亮文字 */
       --mute:#a9b4c3;        /* 次要文字 */
-      --bg:#0a0d12;          /* 页面背景0a0d12 */
+      --bg:#0a0d12;          /* 页面背景 */
       --panel:#12161d;       /* 面板深色 */
       --accent:#ffcc33;      /* 点缀色（标题中的黄色词） */
       --brand:#ffd24a;       /* CTA 亮黄色 */
@@ -23,7 +23,7 @@
     img{max-width:100%;display:block}
     .container{max-width:var(--max);margin:0 auto;padding:0 20px}
 
-    /* 顶部导航：左角标 + 右上“我的课程” */
+    /* 顶部导航 */
     .nav{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,0));backdrop-filter:saturate(160%) blur(6px)}
     .nav .inner{height:64px;display:flex;align-items:center;justify-content:space-between}
     .brand{display:flex;align-items:center;gap:10px}
@@ -32,7 +32,7 @@
     .link{color:#cdd7e6}
     .link:hover{color:#fff}
 
-    /* 顶部大图：居中人物 + 光晕渐变 + 播放按钮 */
+    /* 顶部大图 */
     .hero{position:relative;padding:90px 0 60px}
     .vignette{position:absolute;inset:0;background:
       radial-gradient(closest-side at 52% 35%, rgba(255,255,255,.18), rgba(255,255,255,0) 55%),
@@ -46,17 +46,21 @@
 
     /* 标题文案 */
     .headline{margin-top:26px;text-align:center}
-    .headline h1{margin:0 0 20px;font-size:56px;font-weight: 800;letter-spacing:.5px;color: #fff;}
+    .headline h1{margin:0 0 20px;font-size:56px;font-weight: 800;letter-spacing:.5px;color:#fff;}
     .headline h1 .hl{color:var(--accent)}
-    .headline p{margin:10px auto 0;max-width:960px;font-size: 32px;font-weight: 400;color: #ddd;line-height: 1.9;}
-    .headline p .hl {color: #ffcc33;font-weight: 600;}
-    /* 下方三列课程 + 右侧信息栏布局 */
+    .headline p{margin:10px auto 0;max-width:960px;font-size:32px;font-weight:400;color:#ddd;line-height:1.9;}
+    .headline p .hl {color:#ffcc33;font-weight:600;}
+
+    /* 下方布局 */
     .below{padding:36px 0 70px;border-top:1px solid var(--line)}
-    .grid{display:grid;grid-template-columns:2fr 1fr;gap:22px}
+    .grid{display:grid;grid-template-columns:2fr 1fr;gap:22px;align-items:stretch}
     .cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
     .card{background:linear-gradient(180deg,#12161d,#0f141b);border:1px solid #1c2430;border-radius:var(--radius);padding:18px}
     .card h3{margin:6px 0 10px;font-size:18px}
     .muted{color:var(--mute)}
+
+    /* 左列三行：顶部内容 / 中间占位 / 底部二维码 */
+    .leftcol{display:grid;grid-template-rows:auto 1fr auto}
 
     /* 右侧信息栏 */
     .side{display:grid;gap:14px}
@@ -64,32 +68,46 @@
     .panel h4{margin:0 0 10px}
     .btn{display:inline-block;background:var(--brand);color:#000;padding:10px 16px;border-radius:10px;font-weight:700}
 
+    /* 左下角二维码块 */
+    .qr-section{
+      justify-self:start;
+      background:#0f131a;border:1px solid #1c2430;border-radius:var(--radius);
+      padding:16px 18px;max-width:520px
+    }
+    .qr-title{margin:0 0 10px;font-size:18px;color:#fff}
+    .qr-wrap{display:flex;gap:18px;flex-wrap:wrap}
+    .qr-item{text-align:center}
+    .qr-item img{width:140px;border-radius:8px;display:block}
+    .qr-cap{margin-top:6px;font-size:14px;color:#a9b4c3}
+
     /* 页脚 */
     footer{border-top:1px solid var(--line);padding:20px 0;color:#93a2b6;text-align:center}
 
     /* 响应式 */
     @media (max-width: 1100px){ .cols3{grid-template-columns:1fr 1fr} }
-    @media (max-width: 820px){ .grid{grid-template-columns:1fr} .cols3{grid-template-columns:1fr} .headline h1{font-size:34px} }
+    @media (max-width: 820px){
+      .grid{grid-template-columns:1fr}
+      .cols3{grid-template-columns:1fr}
+      .headline h1{font-size:34px}
+      .leftcol{grid-template-rows:auto auto}
+      .qr-section{justify-self:center}
+    }
   </style>
 </head>
 <body>
   <!-- 顶部导航 -->
   <header class="nav">
     <div class="container inner">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-      </div>
+      <div class="brand"><div class="logo" aria-hidden="true"></div></div>
       <a class="link" href="#courses">我的课程</a>
     </div>
   </header>
 
-  <!-- 顶部大图区（黑色背景 + 人物大图 + 播放按钮 + 标题/副标题） -->
+  <!-- 顶部大图 -->
   <section class="hero">
     <div class="vignette" aria-hidden="true"></div>
     <div class="container center">
-      <!-- 替换为你的形象照：将图片放在 /assets/portrait.jpg 并改 src -->
       <img class="portrait" src="zhenwu.jpg" alt="讲师形象照占位" />
-
       <div class="headline">
         <h1>方知数学®</h1>
         <p>培养 <span class="hl">数学家思维</span>，真正学好数学</p>
@@ -98,10 +116,11 @@
     </div>
   </section>
 
-  <!-- 下方内容：左侧课程模块，右侧信息/试听/报名 -->
+  <!-- 下方内容 -->
   <section class="below">
     <div class="container grid">
-      <div>
+      <!-- 左列 -->
+      <div class="leftcol">
         <div class="cols3">
           <div class="card">
             <h3>“初中”数学思维课程</h3>
@@ -116,22 +135,24 @@
             <p class="muted">函数综合、不等式、数列压轴专题，构建解题模板与易错清单。</p>
           </div>
         </div>
-      </div>
-  <!-- 新增的二维码区域 -->
-<div style="margin-top:40px; text-align:center">
-  <h3 style="color:#fff; margin-bottom:20px; font-size:22px;">扫码关注</h3>
-  <div style="display:flex; gap:30px; flex-wrap:wrap; justify-content:center;">
-    <div style="text-align:center">
-      <img src="weixin.jpg" alt="微信二维码" style="width:140px; border-radius:8px"/>
-      <div style="font-size:14px; color:#aaa; margin-top:6px">微信</div>
-    </div>
-    <div style="text-align:center">
-      <img src="douyin.jpg" alt="抖音二维码" style="width:140px; border-radius:8px"/>
-      <div style="font-size:14px; color:#aaa; margin-top:6px">抖音</div>
-    </div>
-  </div>
-</div>
 
+        <!-- 左下角 · 二维码 -->
+        <div class="qr-section">
+          <h3 class="qr-title">扫码关注</h3>
+          <div class="qr-wrap">
+            <div class="qr-item">
+              <img src="weixin.jpg" alt="微信二维码">
+              <div class="qr-cap">微信</div>
+            </div>
+            <div class="qr-item">
+              <img src="douyin.jpg" alt="抖音二维码">
+              <div class="qr-cap">抖音</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧 -->
       <aside class="side">
         <div class="panel">
           <h4>近期试听</h4>
