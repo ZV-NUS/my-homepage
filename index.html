@@ -6,58 +6,86 @@
   <title>方知数学 | 首页</title>
   <meta name="description" content="方知数学——初高中数学课程与教研。逻辑先行，系统提分。" />
   <style>
-    /* 尽量还原教育机构站点常见的清爽布局与层次（自研实现，未复用他站素材） */
-    :root{ --brand:#0a5bd3; --brand-600:#0849a9; --brand-50:#eff5ff; --ink:#1b2430; --mute:#5b6b7b; --line:#e9eef5; --max:1180px; }
+    /* =====================
+       Pixel-close Base
+       ——自研实现，供学习/二次编辑用——
+       通过变量可快速微调到“几乎一致”的观感
+       ===================== */
+    :root{
+      /* 版心与层次 */
+      --max:1200px;     /* 容器最大宽度 */
+      --gutter:20px;    /* 页面左右留白 */
+      --radius:12px;    /* 卡片圆角 */
+      --shadow:0 8px 24px rgba(0,0,0,.06);
+      /* 颜色体系（可按目标站微调） */
+      --ink:#1a2430;      /* 主要文字色 */
+      --mute:#5e6b7a;     /* 次要文字色 */
+      --line:#e9eef5;     /* 分割线 */
+      --bg:#ffffff;       /* 页面背景 */
+      --soft:#f4f7fb;     /* 柔和浅底 */
+      --brand:#0a5bd3;    /* 主色 */
+      --brand-600:#0849a9;/* 主色hover */
+      --brand-50:#eff5ff; /* 极浅底 */
+      --link:#0a5bd3;
+      /* 导航条 */
+      --nav-h:68px;
+      --nav-border:#e9eef5;
+      /* 字号节律（可整体放大/缩小1–2px试出最佳观感） */
+      --h1:42px; --h2:26px; --h3:18px; --p:16px; --small:13px;
+    }
     *{box-sizing:border-box}
-    html,body{margin:0;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Arial,"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
-    a{color:var(--brand);text-decoration:none}
+    html,body{margin:0;background:var(--bg);color:var(--ink);
+      font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Arial,"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+      -webkit-font-smoothing:antialiased;}
+    a{color:var(--link);text-decoration:none}
     img{max-width:100%;display:block}
-    .container{max-width:var(--max);margin:0 auto;padding:0 20px}
+    .container{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
 
-    /* 顶部导航（细边+固定高度） */
-    .nav{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid var(--line)}
-    .nav .inner{height:68px;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:700}
-    .brand-badge{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--brand),#72a7ff)}
+    /* ===== NAV ===== */
+    .nav{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid var(--nav-border)}
+    .nav .inner{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.2px}
+    .brand-mark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--brand),#73a6ff)}
     .menu{display:flex;gap:22px}
     .menu a{color:var(--ink)}
     .menu a:hover{color:var(--brand)}
 
-    /* 顶部横幅（左文案右大图） */
+    /* ===== HERO ===== */
     .hero{background:linear-gradient(180deg,var(--brand-50),#fff);border-bottom:1px solid var(--line)}
     .hero .grid{display:grid;grid-template-columns:1.15fr 1fr;gap:34px;align-items:center;padding:64px 0}
-    .h-title{margin:0 0 8px;font-size:42px;line-height:1.15}
-    .h-sub{margin:0 0 18px;color:var(--mute);font-size:17px}
+    .h-title{margin:0 0 10px;font-size:var(--h1);line-height:1.15;letter-spacing:.2px}
+    .h-sub{margin:0 0 18px;color:var(--mute);font-size:17px;line-height:1.7}
     .cta{display:inline-block;background:var(--brand);color:#fff;padding:11px 18px;border-radius:10px}
     .cta:hover{background:var(--brand-600)}
-    .hero-shot{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
-    .ph{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:#7b8b9c;background:conic-gradient(from 180deg at 50% 50%,#e7f0ff, #ffffff)}
+    .hero-shot{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;box-shadow:var(--shadow)}
+    .ph{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:#7b8b9c;background:conic-gradient(from 180deg at 50% 50%,#e7f0ff,#ffffff)}
 
-    /* 模块标题/副标题 */
+    /* ===== SECTION BASE ===== */
     .section{padding:56px 0}
-    .s-title{margin:0 0 6px;font-size:26px}
+    .s-title{margin:0 0 6px;font-size:var(--h2)}
     .s-sub{margin:0 0 22px;color:var(--mute)}
 
-    /* 三列简介卡 */
+    /* ===== 3 COLS ===== */
     .cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .card{border:1px solid var(--line);border-radius:12px;background:#fff;padding:18px}
-    .card h3{margin:6px 0 6px;font-size:18px}
+    .card{border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:18px;box-shadow:var(--shadow)}
+    .card h3{margin:6px 0 6px;font-size:var(--h3)}
+    .muted{color:var(--mute)}
 
-    /* 两列：左内容列表 + 右侧栏 */
+    /* ===== SPLIT LIST + ASIDE ===== */
     .split{display:grid;grid-template-columns:2fr 1fr;gap:20px}
-    .post{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px;margin-bottom:12px}
+    .post{border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
     .post h4{margin:6px 0 6px;font-size:16px}
-    .aside{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px}
+    .aside{border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:16px;box-shadow:var(--shadow)}
     .aside a{display:block;color:var(--ink);border-bottom:1px dashed var(--line);padding:10px 0}
 
-    /* 页脚深色区 */
+    /* ===== FOOTER ===== */
     footer{margin-top:48px;background:#0a1730;color:#c6d4ea}
     footer .inner{padding:30px 0}
     .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:18px}
     footer a{color:#e7f2ff}
-    .copy{border-top:1px solid #1f3150;margin-top:16px;padding-top:10px;color:#9fb2cb;font-size:13px}
+    .copy{border-top:1px solid #1f3150;margin-top:16px;padding-top:10px;color:#9fb2cb;font-size:var(--small)}
 
-    /* 响应式 */
+    /* ===== Responsive ===== */
     @media (max-width: 980px){
       .hero .grid{grid-template-columns:1fr}
       .cols3,.split,.foot-grid{grid-template-columns:1fr}
@@ -67,11 +95,11 @@
   </style>
 </head>
 <body>
-  <!-- 顶部导航 -->
+  <!-- NAV -->
   <header class="nav">
     <div class="container inner">
       <a class="brand" href="#top" aria-label="首页">
-        <span class="brand-badge" aria-hidden="true"></span>
+        <span class="brand-mark" aria-hidden="true"></span>
         <span>方知数学</span>
       </a>
       <nav class="menu">
@@ -83,7 +111,7 @@
     </div>
   </header>
 
-  <!-- 顶部横幅 -->
+  <!-- HERO -->
   <section class="hero" id="top">
     <div class="container grid">
       <div>
@@ -92,12 +120,13 @@
         <a class="cta" href="#contact">预约咨询</a>
       </div>
       <div class="hero-shot">
-        <div class="ph">放置你的横幅图（/assets/hero.jpg）</div>
+        <!-- 替换为你的横幅图：将图片放在仓库 /assets/hero.jpg 并替换 src -->
+        <img src="https://picsum.photos/1200/675?blur=0" alt="横幅图占位" />
       </div>
     </div>
   </section>
 
-  <!-- 三列简介 -->
+  <!-- 3 COLS 简介 -->
   <section class="section" id="about">
     <div class="container">
       <h2 class="s-title">我们能做什么</h2>
@@ -105,35 +134,35 @@
       <div class="cols3">
         <div class="card">
           <h3>系统课程</h3>
-          <p class="mute">同步课 · 强化课 · 冲刺课，覆盖函数、几何、数列、概率统计。</p>
+          <p class="muted">同步课 · 强化课 · 冲刺课，覆盖函数、几何、数列、概率统计。</p>
         </div>
         <div class="card">
           <h3>方法论</h3>
-          <p class="mute">“本质—模型—方法—模板—易错”五步法，举一反三。</p>
+          <p class="muted">“本质—模型—方法—模板—易错”五步法，举一反三。</p>
         </div>
         <div class="card">
           <h3>个性化</h3>
-          <p class="mute">入学测评定位短板，制定个人学习路径，过程与结果双闭环。</p>
+          <p class="muted">入学测评定位短板，制定个人学习路径，过程与结果双闭环。</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 新闻 / 公告区（左列表 + 右侧栏） -->
+  <!-- NEWS / ANNOUNCE -->
   <section class="section" id="news">
     <div class="container split">
       <div>
         <div class="post">
           <h4>【公告】秋季班开班与报名须知</h4>
-          <p class="mute">班级设置、时间安排、讲义与测评说明。</p>
+          <p class="muted">班级设置、时间安排、讲义与测评说明。</p>
         </div>
         <div class="post">
           <h4>【教研】函数单调性的本质图景</h4>
-          <p class="mute">从变化率角度统一理解导数与不等式。</p>
+          <p class="muted">从变化率角度统一理解导数与不等式。</p>
         </div>
         <div class="post">
           <h4>【家长说】从 90 到 116 的三步走</h4>
-          <p class="mute">明确短板、构建模板、针对性练习。</p>
+          <p class="muted">明确短板、构建模板、针对性练习。</p>
         </div>
       </div>
       <aside class="aside">
@@ -145,7 +174,7 @@
     </div>
   </section>
 
-  <!-- 联系我们（简单表单） -->
+  <!-- CONTACT -->
   <section class="section" id="contact">
     <div class="container">
       <h2 class="s-title">联系我们</h2>
@@ -163,13 +192,13 @@
     </div>
   </section>
 
-  <!-- 页脚 -->
+  <!-- FOOTER -->
   <footer>
     <div class="container inner">
       <div class="foot-grid">
         <div>
           <h3>方知数学</h3>
-          <p class="mute">逻辑先行 · 系统提分</p>
+          <p class="muted">逻辑先行 · 系统提分</p>
         </div>
         <div>
           <strong>课程</strong>
