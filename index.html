@@ -4,217 +4,149 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>方知数学 | 首页</title>
-  <meta name="description" content="方知数学——初高中数学课程与教研。逻辑先行，系统提分。" />
+  <meta name="description" content="方知数学——培养数学思维，真正学好数学。" />
   <style>
-    /* =====================
-       Pixel-close Base
-       ——自研实现，供学习/二次编辑用——
-       通过变量可快速微调到“几乎一致”的观感
-       ===================== */
     :root{
-      /* 版心与层次 */
-      --max:1200px;     /* 容器最大宽度 */
-      --gutter:20px;    /* 页面左右留白 */
-      --radius:12px;    /* 卡片圆角 */
-      --shadow:0 8px 24px rgba(0,0,0,.06);
-      /* 颜色体系（可按目标站微调） */
-      --ink:#1a2430;      /* 主要文字色 */
-      --mute:#5e6b7a;     /* 次要文字色 */
-      --line:#e9eef5;     /* 分割线 */
-      --bg:#ffffff;       /* 页面背景 */
-      --soft:#f4f7fb;     /* 柔和浅底 */
-      --brand:#0a5bd3;    /* 主色 */
-      --brand-600:#0849a9;/* 主色hover */
-      --brand-50:#eff5ff; /* 极浅底 */
-      --link:#0a5bd3;
-      /* 导航条 */
-      --nav-h:68px;
-      --nav-border:#e9eef5;
-      /* 字号节律（可整体放大/缩小1–2px试出最佳观感） */
-      --h1:42px; --h2:26px; --h3:18px; --p:16px; --small:13px;
+      --ink:#e8ecf3;         /* 亮文字 */
+      --mute:#a9b4c3;        /* 次要文字 */
+      --bg:#0a0d12;          /* 页面背景 */
+      --panel:#12161d;       /* 面板深色 */
+      --accent:#ffcc33;      /* 点缀色（标题中的黄色词） */
+      --brand:#ffd24a;       /* CTA 亮黄色 */
+      --line:#1e2530;        /* 分割线 */
+      --max:1200px;          /* 版心 */
+      --radius:12px;         /* 圆角 */
     }
     *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:var(--ink);
-      font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Arial,"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
-      -webkit-font-smoothing:antialiased;}
-    a{color:var(--link);text-decoration:none}
+    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Inter,Arial,"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:var(--ink);text-decoration:none}
     img{max-width:100%;display:block}
-    .container{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+    .container{max-width:var(--max);margin:0 auto;padding:0 20px}
 
-    /* ===== NAV ===== */
-    .nav{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid var(--nav-border)}
-    .nav .inner{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.2px}
-    .brand-mark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--brand),#73a6ff)}
-    .menu{display:flex;gap:22px}
-    .menu a{color:var(--ink)}
-    .menu a:hover{color:var(--brand)}
+    /* 顶部导航：左角标 + 右上“我的课程” */
+    .nav{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,0));backdrop-filter:saturate(160%) blur(6px)}
+    .nav .inner{height:64px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand .logo{width:34px;height:34px;border-radius:6px;background:linear-gradient(135deg,#1a1f2b,#313a4d);border:1px solid #3b4559;display:grid;place-items:center}
+    .brand .logo::after{content:"E";color:#f5d27a;font-weight:800}
+    .link{color:#cdd7e6}
+    .link:hover{color:#fff}
 
-    /* ===== HERO ===== */
-    .hero{background:linear-gradient(180deg,var(--brand-50),#fff);border-bottom:1px solid var(--line)}
-    .hero .grid{display:grid;grid-template-columns:1.15fr 1fr;gap:34px;align-items:center;padding:64px 0}
-    .h-title{margin:0 0 10px;font-size:var(--h1);line-height:1.15;letter-spacing:.2px}
-    .h-sub{margin:0 0 18px;color:var(--mute);font-size:17px;line-height:1.7}
-    .cta{display:inline-block;background:var(--brand);color:#fff;padding:11px 18px;border-radius:10px}
-    .cta:hover{background:var(--brand-600)}
-    .hero-shot{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;box-shadow:var(--shadow)}
-    .ph{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:#7b8b9c;background:conic-gradient(from 180deg at 50% 50%,#e7f0ff,#ffffff)}
+    /* 顶部大图：居中人物 + 光晕渐变 + 播放按钮 */
+    .hero{position:relative;padding:90px 0 60px}
+    .vignette{position:absolute;inset:0;background:
+      radial-gradient(closest-side at 52% 35%, rgba(255,255,255,.18), rgba(255,255,255,0) 55%),
+      radial-gradient(1200px 600px at 50% 0%, rgba(255,255,255,.12), rgba(0,0,0,.0) 60%),
+      radial-gradient(1000px 520px at 50% 0%, rgba(0,0,0,.75), rgba(0,0,0,0) 60%);
+      pointer-events:none}
+    .hero .center{position:relative;z-index:1;display:grid;place-items:center}
+    .portrait{width:min(360px,50vw);aspect-ratio:3/4;border-radius:12px;object-fit:cover;filter:saturate(.96);box-shadow:0 30px 80px rgba(0,0,0,.55)}
+    .play{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,.08);backdrop-filter:blur(2px);display:grid;place-items:center;border:1px solid rgba(255,255,255,.2)}
+    .play::after{content:"";width:0;height:0;border-left:18px solid #fff;border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:4px}
 
-    /* ===== SECTION BASE ===== */
-    .section{padding:56px 0}
-    .s-title{margin:0 0 6px;font-size:var(--h2)}
-    .s-sub{margin:0 0 22px;color:var(--mute)}
+    /* 标题文案 */
+    .headline{margin-top:26px;text-align:center}
+    .headline h1{margin:0 0 10px;font-size:44px;letter-spacing:.3px}
+    .headline h1 .hl{color:var(--accent)}
+    .headline p{margin:6px auto 0;max-width:880px;color:var(--mute);line-height:1.8}
 
-    /* ===== 3 COLS ===== */
-    .cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .card{border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:18px;box-shadow:var(--shadow)}
-    .card h3{margin:6px 0 6px;font-size:var(--h3)}
+    /* 下方三列课程 + 右侧信息栏布局 */
+    .below{padding:36px 0 70px;border-top:1px solid var(--line)}
+    .grid{display:grid;grid-template-columns:2fr 1fr;gap:22px}
+    .cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:linear-gradient(180deg,#12161d,#0f141b);border:1px solid #1c2430;border-radius:var(--radius);padding:18px}
+    .card h3{margin:6px 0 10px;font-size:18px}
     .muted{color:var(--mute)}
 
-    /* ===== SPLIT LIST + ASIDE ===== */
-    .split{display:grid;grid-template-columns:2fr 1fr;gap:20px}
-    .post{border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
-    .post h4{margin:6px 0 6px;font-size:16px}
-    .aside{border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:16px;box-shadow:var(--shadow)}
-    .aside a{display:block;color:var(--ink);border-bottom:1px dashed var(--line);padding:10px 0}
+    /* 右侧信息栏 */
+    .side{display:grid;gap:14px}
+    .panel{background:#0f131a;border:1px solid #1c2430;border-radius:var(--radius);padding:16px}
+    .panel h4{margin:0 0 10px}
+    .btn{display:inline-block;background:var(--brand);color:#000;padding:10px 16px;border-radius:10px;font-weight:700}
 
-    /* ===== FOOTER ===== */
-    footer{margin-top:48px;background:#0a1730;color:#c6d4ea}
-    footer .inner{padding:30px 0}
-    .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:18px}
-    footer a{color:#e7f2ff}
-    .copy{border-top:1px solid #1f3150;margin-top:16px;padding-top:10px;color:#9fb2cb;font-size:var(--small)}
+    /* 页脚 */
+    footer{border-top:1px solid var(--line);padding:20px 0;color:#93a2b6;text-align:center}
 
-    /* ===== Responsive ===== */
-    @media (max-width: 980px){
-      .hero .grid{grid-template-columns:1fr}
-      .cols3,.split,.foot-grid{grid-template-columns:1fr}
-      .menu{display:none}
-      .h-title{font-size:34px}
-    }
+    /* 响应式 */
+    @media (max-width: 1100px){ .cols3{grid-template-columns:1fr 1fr} }
+    @media (max-width: 820px){ .grid{grid-template-columns:1fr} .cols3{grid-template-columns:1fr} .headline h1{font-size:34px} }
   </style>
 </head>
 <body>
-  <!-- NAV -->
+  <!-- 顶部导航 -->
   <header class="nav">
     <div class="container inner">
-      <a class="brand" href="#top" aria-label="首页">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span>方知数学</span>
-      </a>
-      <nav class="menu">
-        <a href="#about">课程特色</a>
-        <a href="#courses">课程设置</a>
-        <a href="#news">最新动态</a>
-        <a href="#contact">联系我们</a>
-      </nav>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+      </div>
+      <a class="link" href="#courses">我的课程</a>
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero" id="top">
+  <!-- 顶部大图区（黑色背景 + 人物大图 + 播放按钮 + 标题/副标题） -->
+  <section class="hero">
+    <div class="vignette" aria-hidden="true"></div>
+    <div class="container center">
+      <!-- 替换为你的形象照：将图片放在 /assets/portrait.jpg 并改 src -->
+      <img class="portrait" src="https://picsum.photos/720/960?random=12" alt="讲师形象照占位" />
+      <div class="play" title="播放介绍视频"></div>
+
+      <div class="headline">
+        <h1>方知数学®</h1>
+        <p>培养 <span class="hl">数学家思维</span>，真正学好数学。以本质理解为核心，系统化课程与方法论相结合。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 下方内容：左侧课程模块，右侧信息/试听/报名 -->
+  <section class="below">
     <div class="container grid">
       <div>
-        <h1 class="h-title">方知数学 · 初高中数学</h1>
-        <p class="h-sub">逻辑先行，系统提分。以本质理解为核心，构建从概念到解题的完整知识链。</p>
-        <a class="cta" href="#contact">预约咨询</a>
+        <div class="cols3">
+          <div class="card">
+            <h3>“初中”数学思维课程</h3>
+            <p class="muted">灵活学习数学思维：函数图像、几何变换、概率统计；打通知识与题型。</p>
+          </div>
+          <div class="card">
+            <h3>“高中”数学思维课程</h3>
+            <p class="muted">两大模块：解析几何与导数；强化抽象能力与策略选择，冲刺高考高分。</p>
+          </div>
+          <div class="card">
+            <h3>专题 · 压轴题精讲</h3>
+            <p class="muted">函数综合、不等式、数列压轴专题，构建解题模板与易错清单。</p>
+          </div>
+        </div>
       </div>
-      <div class="hero-shot">
-        <!-- 替换为你的横幅图：将图片放在仓库 /assets/hero.jpg 并替换 src -->
-        <img src="https://picsum.photos/1200/675?blur=0" alt="横幅图占位" />
-      </div>
-    </div>
-  </section>
 
-  <!-- 3 COLS 简介 -->
-  <section class="section" id="about">
-    <div class="container">
-      <h2 class="s-title">我们能做什么</h2>
-      <p class="s-sub">课程体系、方法论、个性化服务的简洁说明。</p>
-      <div class="cols3">
-        <div class="card">
-          <h3>系统课程</h3>
-          <p class="muted">同步课 · 强化课 · 冲刺课，覆盖函数、几何、数列、概率统计。</p>
+      <aside class="side">
+        <div class="panel">
+          <h4>近期试听</h4>
+          <p class="muted">高一：立体几何 · 周六 19:00<br/>高二/高三：函数专题 · 周日 19:00<br/>初中：因式分解 · 周五 19:00</p>
         </div>
-        <div class="card">
-          <h3>方法论</h3>
-          <p class="muted">“本质—模型—方法—模板—易错”五步法，举一反三。</p>
+        <div class="panel">
+          <h4>预约测评</h4>
+          <form onsubmit="event.preventDefault(); alert('已提交，我们会尽快联系您');">
+            <div style="display:grid;gap:10px">
+              <input required placeholder="学生姓名" style="padding:10px;border:1px solid var(--line);border-radius:10px;background:#0c1016;color:var(--ink)"/>
+              <input required placeholder="联系方式" style="padding:10px;border:1px solid var(--line);border-radius:10px;background:#0c1016;color:var(--ink)"/>
+              <select style="padding:10px;border:1px solid var(--line);border-radius:10px;background:#0c1016;color:var(--ink)">
+                <option>年级</option><option>初一</option><option>初二</option><option>初三</option>
+                <option>高一</option><option>高二</option><option>高三</option>
+              </select>
+              <button class="btn" type="submit">提交信息</button>
+            </div>
+          </form>
         </div>
-        <div class="card">
-          <h3>个性化</h3>
-          <p class="muted">入学测评定位短板，制定个人学习路径，过程与结果双闭环。</p>
+        <div class="panel">
+          <h4>联系我们</h4>
+          <p class="muted">微信：FZ‑Math（示例）<br/>邮箱：yourmail@example.com</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- NEWS / ANNOUNCE -->
-  <section class="section" id="news">
-    <div class="container split">
-      <div>
-        <div class="post">
-          <h4>【公告】秋季班开班与报名须知</h4>
-          <p class="muted">班级设置、时间安排、讲义与测评说明。</p>
-        </div>
-        <div class="post">
-          <h4>【教研】函数单调性的本质图景</h4>
-          <p class="muted">从变化率角度统一理解导数与不等式。</p>
-        </div>
-        <div class="post">
-          <h4>【家长说】从 90 到 116 的三步走</h4>
-          <p class="muted">明确短板、构建模板、针对性练习。</p>
-        </div>
-      </div>
-      <aside class="aside">
-        <strong>快速入口</strong>
-        <a href="#courses">课程设置</a>
-        <a href="#contact">预约测评</a>
-        <a href="#faq">常见问答</a>
       </aside>
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section class="section" id="contact">
-    <div class="container">
-      <h2 class="s-title">联系我们</h2>
-      <p class="s-sub">微信：FZ-Math（示例） · 邮箱：yourmail@example.com</p>
-      <div class="card">
-        <form onsubmit="event.preventDefault(); alert('已收到，我们会尽快联系您。')">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:680px">
-            <input required placeholder="学生姓名" style="padding:10px;border:1px solid var(--line);border-radius:10px"/>
-            <input required placeholder="联系方式" style="padding:10px;border:1px solid var(--line);border-radius:10px"/>
-            <input placeholder="年级/目标（选填）" style="padding:10px;border:1px solid var(--line);border-radius:10px;grid-column:1/-1"/>
-            <button class="cta" type="submit">提交</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
   <footer>
-    <div class="container inner">
-      <div class="foot-grid">
-        <div>
-          <h3>方知数学</h3>
-          <p class="muted">逻辑先行 · 系统提分</p>
-        </div>
-        <div>
-          <strong>课程</strong>
-          <p><a href="#courses">课程设置</a><br><a href="#news">最新动态</a></p>
-        </div>
-        <div>
-          <strong>服务</strong>
-          <p><a href="#about">课程特色</a><br><a href="#contact">预约测评</a></p>
-        </div>
-        <div>
-          <strong>联系</strong>
-          <p><a href="#contact">微信/邮箱</a></p>
-        </div>
-      </div>
-      <div class="copy">© <span id="y"></span> 方知数学 • All rights reserved.</div>
-    </div>
+    <div class="container">© <span id="y"></span> 方知数学 • All rights reserved.</div>
   </footer>
 
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
