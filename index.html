@@ -1,31 +1,302 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>我的个人主页</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>方知数学 | 官方网站</title>
+  <meta name="description" content="方知数学：系统化课程 · 逻辑先行 · 家长放心。初高中数学提分与素养并重。" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 50px;
+    :root{
+      --brand:#0b6cff; --brand-600:#0958cc; --brand-50:#f0f6ff;
+      --text:#263238; --muted:#61727d; --bg:#ffffff; --card:#ffffff;
+      --shadow:0 10px 25px rgba(11,108,255,.12); --radius:14px; --max:1120px;
     }
-    h1 {
-      color: #333;
-    }
-    p {
-      font-size: 18px;
-      color: #666;
-    }
-    a {
-      color: #0077cc;
-      text-decoration: none;
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Arial,"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+    a{color:var(--brand);text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:var(--max);margin:0 auto;padding:0 20px}
+    /* 顶部导航 */
+    .nav{position:sticky;top:0;z-index:40;background:#ffffffcc;backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid #eef2f7}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .logo{display:flex;align-items:center;gap:10px}
+    .logo .dot{width:28px;height:28px;border-radius:8px;background:linear-gradient(145deg,var(--brand),#64a5ff)}
+    .logo span{font-weight:700;font-size:18px}
+    .menu{display:flex;gap:20px;align-items:center}
+    .menu a{color:var(--text);font-weight:500}
+    .menu a:hover{color:var(--brand)}
+    .btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;box-shadow:var(--shadow)}
+    .btn:hover{background:var(--brand-600)}
+    .menu-toggle{display:none}
+    /* Hero */
+    .hero{background:linear-gradient(180deg,var(--brand-50),#fff);padding:72px 0}
+    .hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:36px;align-items:center}
+    .hero h1{font-size:42px;margin:0 0 12px;line-height:1.2}
+    .hero p{color:var(--muted);font-size:17px;margin:0 0 22px}
+    .badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid #e9eef6;border-radius:999px;padding:8px 12px;margin-bottom:14px}
+    .badge b{color:var(--brand)}
+    .hero-card{background:#fff;border:1px solid #eef2f7;border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+    .hero-form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .hero-form input,.hero-form select, .hero-form textarea{width:100%;padding:12px 12px;border:1px solid #e5ecf3;border-radius:10px}
+    .hero-form button{grid-column:1/-1}
+    .hero-illus{border-radius:16px;overflow:hidden;border:1px solid #e5ecf3}
+    .hero-illus .placeholder{aspect-ratio:16/10;background:conic-gradient(from 180deg at 50% 50%,#e9f1ff, #ffffff);display:flex;align-items:center;justify-content:center;color:#7a8b99}
+    /* 特色模块 */
+    .section{padding:64px 0}
+    .section h2{font-size:28px;margin:0 0 10px}
+    .section p.lead{color:var(--muted);margin:0 0 28px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--card);border:1px solid #eef2f7;border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+    .icon{width:40px;height:40px;border-radius:10px;background:linear-gradient(145deg,var(--brand),#64a5ff);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+    .muted{color:var(--muted)}
+    /* 班型/课程 */
+    .grid-2{display:grid;grid-template-columns:1.2fr 1fr;gap:18px}
+    .cover{border-radius:12px;overflow:hidden;border:1px solid #e5ecf3}
+    .list{display:grid;gap:12px}
+    .list .item{display:flex;gap:14px;align-items:flex-start;border:1px solid #eef2f7;border-radius:12px;padding:14px;background:#fff}
+    .tag{display:inline-block;background:var(--brand-50);color:var(--brand-600);padding:4px 10px;border-radius:999px;font-size:12px}
+    /* 师资 */
+    .teachers{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .avatar{width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid #e5ecf3}
+    .teacher-card{display:flex;gap:12px;align-items:center}
+    /* 口碑 */
+    .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .quote{background:#fff;border:1px solid #eef2f7;border-radius:12px;padding:16px}
+    /* 新闻 */
+    .news{display:grid;grid-template-columns:2fr 1fr;gap:18px}
+    .news .post{border:1px solid #eef2f7;border-radius:12px;padding:16px;background:#fff}
+    .news .post h3{margin:6px 0 6px;font-size:18px}
+    .news .side a{display:block;padding:10px 0;border-bottom:1px dashed #e5ecf3;color:var(--text)}
+    .news .side a:hover{color:var(--brand)}
+    /* 底部 */
+    footer{background:#0b1930;color:#c2d1e3;padding:36px 0;margin-top:60px}
+    footer a{color:#e1ecff}
+    .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:18px}
+    .copyright{border-top:1px solid #23324a;margin-top:22px;padding-top:14px;color:#9db2c7;font-size:13px}
+    /* 响应式 */
+    @media (max-width: 960px){
+      .hero-grid,.grid-3,.grid-2,.teachers,.news,.foot-grid,.quotes{grid-template-columns:1fr}
+      .menu{display:none}
+      .menu.open{display:flex;flex-direction:column;gap:12px;padding:12px 0}
+      .menu-toggle{display:inline-flex}
+      .hero{padding:48px 0}
+      .hero h1{font-size:34px}
     }
   </style>
 </head>
 <body>
-  <h1>你好，我是方振伍 👋</h1>
-  <p>这是我的个人主页 🚀</p>
-  <p>📧 邮箱: <a href="mailto:yourmail@example.com">yourmail@example.com</a></p>
-  <p>🔗 GitHub: <a href="https://github.com/ZV-NUS" target="_blank">我的GitHub主页</a></p>
+  <!-- 顶部导航 -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="logo" href="#top" aria-label="home">
+        <span class="dot" aria-hidden="true"></span>
+        <span>方知数学 FZ‑Math</span>
+      </a>
+      <button class="menu-toggle btn" aria-label="open menu" onclick="toggleMenu()">菜单</button>
+      <div id="menu" class="menu">
+        <a href="#about">课程特色</a>
+        <a href="#programs">班型设置</a>
+        <a href="#faculty">师资团队</a>
+        <a href="#reviews">口碑反馈</a>
+        <a href="#contact" class="btn">预约测评</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero" id="top">
+    <div class="container hero-grid">
+      <div>
+        <div class="badge"><span>📘</span><b>系统化提分 · 逻辑先行 · 家长放心</b></div>
+        <h1>方知数学｜初高中数学·提分与素养并重</h1>
+        <p>以“本质—模型—方法—模板—易错”五步学习法，构建从概念到解题的完整知识图谱。</p>
+        <div class="hero-card">
+          <form class="hero-form" onsubmit="event.preventDefault(); alert('提交成功，我们将尽快联系您。')">
+            <input required type="text" placeholder="学生姓名" />
+            <select required>
+              <option value="" disabled selected>年级</option>
+              <option>初一</option><option>初二</option><option>初三</option>
+              <option>高一</option><option>高二</option><option>高三</option>
+            </select>
+            <input required type="tel" placeholder="联系方式" />
+            <button class="btn" type="submit">预约入学测评</button>
+          </form>
+        </div>
+      </div>
+      <div class="hero-illus">
+        <div class="placeholder">在此替换为横幅图（/assets/hero.jpg）</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 三大特色 -->
+  <section class="section" id="about">
+    <div class="container">
+      <h2>我们提供什么（方知三大特色）</h2>
+      <p class="lead">面向同步提分与竞赛拔高的双通道训练路线。</p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="icon">A</div>
+          <h3>系统化课程体系</h3>
+          <p class="muted">按学段与模块拆分知识树：函数、几何、数列、概率统计；同步课→强化课→冲刺课三级进阶。</p>
+        </div>
+        <div class="card">
+          <div class="icon">B</div>
+          <h3>方法论与解题模板</h3>
+          <p class="muted">“本质—模型—方法—模板—易错”五步法，举一反三，覆盖高频题型与压轴题套路。</p>
+        </div>
+        <div class="card">
+          <div class="icon">C</div>
+          <h3>个性化诊断与督学</h3>
+          <p class="muted">入学测评定位短板，定制学习路径；学习跟踪与家长反馈闭环，确保结果可见。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 班型与课程 -->
+  <section class="section" id="programs">
+    <div class="container">
+      <h2>核心课程与班型</h2>
+      <p class="lead">根据目标分层设班：基础巩固、拔高提高、竞赛冲刺；每门课均配讲义、清单与阶段测。</p>
+      <div class="grid-2">
+        <div class="cover">
+          <img src="https://picsum.photos/1200/720?random=11" alt="课程封面" />
+        </div>
+        <div class="list">
+          <div class="item">
+            <span class="tag">高中·提分班</span>
+            <div>
+              <h3>函数与导数</h3>
+              <p class="muted">抓住变化率与单调性的“本质图景”，典型题型模板与易错纠正。</p>
+            </div>
+          </div>
+          <div class="item">
+            <span class="tag">高中·强化班</span>
+            <div>
+              <h3>解析几何与向量</h3>
+              <p class="muted">空间想象—向量运算—几何证明三位一体的解题链条。</p>
+            </div>
+          </div>
+          <div class="item">
+            <span class="tag">初中·冲刺班</span>
+            <div>
+              <h3>中考压轴题专题</h3>
+              <p class="muted">分块计数、函数综合、不等式思维训练，专项突破压轴题。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 师资团队 -->
+  <section class="section" id="faculty">
+    <div class="container">
+      <h2>师资与教研团队</h2>
+      <p class="lead">主讲教师 + 助教 + 题库教研组成闭环，保证课堂质量与练习梯度。</p>
+      <div class="teachers">
+        <div class="card teacher-card">
+          <img class="avatar" src="https://picsum.photos/200?1" alt="avatar" />
+          <div>
+            <strong>方振伍</strong>
+            <div class="muted">数学思想 · 竞赛与高考命题研究</div>
+          </div>
+        </div>
+        <div class="card teacher-card">
+          <img class="avatar" src="https://picsum.photos/200?2" alt="avatar" />
+          <div>
+            <strong>张老师</strong>
+            <div class="muted">函数与解析几何</div>
+          </div>
+        </div>
+        <div class="card teacher-card">
+          <img class="avatar" src="https://picsum.photos/200?3" alt="avatar" />
+          <div>
+            <strong>李老师</strong>
+            <div class="muted">数列与不等式</div>
+          </div>
+        </div>
+        <div class="card teacher-card">
+          <img class="avatar" src="https://picsum.photos/200?4" alt="avatar" />
+          <div>
+            <strong>王老师</strong>
+            <div class="muted">组合计数与概率统计</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 口碑反馈 -->
+  <section class="section" id="reviews">
+    <div class="container">
+      <h2>家长与学生怎么说</h2>
+      <div class="quotes">
+        <div class="quote">
+          <p>“不刷题内卷，先讲清楚原理再上手，孩子思路清晰了很多。” — 家长A</p>
+        </div>
+        <div class="quote">
+          <p>“压轴题终于有下手路径了，月考从90到116。” — 高二学生B</p>
+        </div>
+        <div class="quote">
+          <p>“每节课都有清单和模板，回家能独立复盘。” — 初三学生C</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系我们 -->
+  <section class="section" id="contact">
+    <div class="container">
+      <h2>联系与报名</h2>
+      <p class="lead">添加微信/邮箱咨询，或在线提交信息预约入学测评。</p>
+      <div class="grid-2">
+        <div class="card">
+          <h3>微信 / 邮箱</h3>
+          <p>微信：FZ-Math （示例）<br/>邮箱：<a href="mailto:yourmail@example.com">yourmail@example.com</a></p>
+          <p class="muted">也可点击顶部“预约测评”直接提交。</p>
+        </div>
+        <div class="card">
+          <h3>在线留言</h3>
+          <form class="list" onsubmit="event.preventDefault(); alert('已收到留言，我们会尽快联系您。')">
+            <input required type="text" placeholder="您的称呼" />
+            <input required type="email" placeholder="邮箱" />
+            <textarea required rows="4" placeholder="想了解的课程/年级/时间"></textarea>
+            <button class="btn" type="submit">发送留言</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="foot-grid">
+        <div>
+          <h3>方知数学 FZ‑Math</h3>
+          <p>系统化课程 · 逻辑先行 · 家长放心。</p>
+        </div>
+        <div>
+          <h4>课程</h4>
+          <p><a href="#programs">班型设置</a><br><a href="#reviews">口碑反馈</a></p>
+        </div>
+        <div>
+          <h4>关于</h4>
+          <p><a href="#about">课程特色</a><br><a href="#faculty">师资团队</a></p>
+        </div>
+        <div>
+          <h4>联系</h4>
+          <p><a href="#contact">预约测评</a></p>
+        </div>
+      </div>
+      <div class="copyright">© <span id="y"></span> 方知数学 FZ‑Math • All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu(){ document.getElementById('menu').classList.toggle('open'); }
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
